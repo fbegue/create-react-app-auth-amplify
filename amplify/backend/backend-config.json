@@ -1,8 +1,26 @@
 {
-	"auth": {
-		"cognitocf0c6096": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
-		}
-	}
+  "auth": {},
+  "function": {
+    "sfbackendLambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "api": {
+    "sfbackend": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "sfbackendLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    }
+  }
 }
